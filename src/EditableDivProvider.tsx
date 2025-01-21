@@ -1,5 +1,4 @@
 import { ReactNode, createContext, useContext, useState } from "react";
-import { useValidateLabels } from "./useValidateLabels";
 
 
 type EditableDivContextType = {
@@ -13,11 +12,8 @@ type EditableDivProviderProps = {
 }
 export const EditableDivProvider = ({ children }: EditableDivProviderProps) => {
   const [getTextFuncs, setGetTextFuncs] = useState<Record<string, () => string>>({});
-  const validateLabels = useValidateLabels();
 
   const register = (divLabel: string | string[], getText: () => string) => {
-    // validateLabels(divLabel);
-
     setGetTextFuncs((prev) => {
       let updatedFuncs = { ...prev };
 
@@ -48,7 +44,6 @@ export const EditableDivProvider = ({ children }: EditableDivProviderProps) => {
   };
 
   const getValues = () => {
-    validateLabels();
     return extractValues(getTextFuncs);
   }
 
