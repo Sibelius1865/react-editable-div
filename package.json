@@ -2,7 +2,11 @@
   "name": "react-editable-div",
   "version": "1.0.0",
   "description": "A React component for creating editable div elements.",
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sibelius1865/react-editable-div.git"
+  },
+  "licence": "MIT",
   "author": "Harada Taiyo",
   "type": "module",
   "main": "dist/index.js",
