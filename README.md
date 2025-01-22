@@ -1,6 +1,6 @@
-# React Editable Div
+# React Input Div
 
-A lightweight and customizable React component for creating editable `div` elements, with support for placeholder text, default values, and parsing functions.
+A lightweight and customisable React component for creating editable `div` elements, with support for placeholder text, default values, parsing functions, and the ability to manage multiple editable `div` elements simultaneously.
 
 
 ## Features
@@ -9,6 +9,7 @@ A lightweight and customizable React component for creating editable `div` eleme
 - Fully customizable via props.
 - Supports placeholder text and default values.
 - Integration with custom parsers for text processing.
+- Retrieve content from multiple editable `div` elements at once.
 - Lightweight with minimal dependencies.
 
 
