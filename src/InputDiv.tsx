@@ -1,20 +1,19 @@
 import { useRef, useEffect, ReactNode, HTMLProps } from "react";
-import { useEditableDiv } from "./EditableDivProvider";
-// import { useValidateLabels } from "./useValidateLabels";
+import { useInputDiv } from "./InputDivProvider";
 import './style.css';
 
 
-type EditableDivProps = {
+type InputDivProps = {
   children?: ReactNode,
-  divLabel: string | string[],
+  inputKey: string | string[],
   isEditing?: boolean,
   placeholder?: string,
   defaultValue?: string,
   parser?: (text: string) => any,
 } & HTMLProps<HTMLDivElement>;
 
-export const EditableDiv = ({ children, divLabel, isEditing=true, placeholder='', defaultValue='', parser, ...props }: EditableDivProps) => {
-  const { register } = useEditableDiv();
+export const InputDiv = ({ children, inputKey, isEditing=true, placeholder='', defaultValue='', parser, ...props }: InputDivProps) => {
+  const { register } = useInputDiv();
   const editableRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -22,12 +21,12 @@ export const EditableDiv = ({ children, divLabel, isEditing=true, placeholder=''
       const text = editableRef.current?.textContent || "";
       return parser ? parser(text) : text;
     }
-    register(divLabel, getText);
+    register(inputKey, getText);
   }, []);
 
   const editProps = {
     ref: editableRef,
-    className: `${props.className} editable-div`,
+    className: `${props.className} input-div`,
     contentEditable: isEditing,
     suppressContentEditableWarning: true,
     spellCheck: false,
