@@ -1,2 +1,2 @@
-export * from "./EditableDiv";
-export * from "./EditableDivProvider";
+export * from "./InputDiv";
+export * from "./InputDivProvider";

@@ -1,10 +1,10 @@
 {
-  "name": "react-editable-div",
+  "name": "react-input-div",
   "version": "1.0.0",
-  "description": "A React component for creating editable div elements.",
+  "description": "A lightweight library for creating editable React div components with built-in functions to retrieve",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Sibelius1865/react-editable-div.git"
+    "url": "git+https://github.com/Sibelius1865/react-input-div.git"
   },
   "licence": "MIT",
   "author": "Harada Taiyo",

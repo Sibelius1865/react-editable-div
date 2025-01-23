@@ -1,6 +1,6 @@
-# React Editable Div
+# React Input Div
 
-A lightweight and customizable React component for creating editable `div` elements, with support for placeholder text, default values, and parsing functions.
+A lightweight and customisable React component for creating editable `div` elements, with support for placeholder text, default values, parsing functions, and the ability to manage multiple editable `div` elements simultaneously.
 
 
 ## Features
@@ -9,6 +9,7 @@ A lightweight and customizable React component for creating editable `div` eleme
 - Fully customizable via props.
 - Supports placeholder text and default values.
 - Integration with custom parsers for text processing.
+- Retrieve content from multiple editable `div` elements at once.
 - Lightweight with minimal dependencies.
 
 
@@ -17,30 +18,26 @@ A lightweight and customizable React component for creating editable `div` eleme
 Install the package using npm or yarn:
 
 ```bash
-npm install react-editable-div
-```
-
-or
-
-```bash
-yarn add react-editable-div
+npm install react-input-div
+# or
+yarn add react-input-div
 ```
 
 
 ## Usage
 
-Here is an example of how to use the `EditableDiv` component in your project:
+Here is an example of how to use the `InputDiv` component in your project:
 
 ### Basic Example
 
 ```tsx
 import React from "react";
-import { EditableDiv } from "react-editable-div";
+import { InputDiv } from "react-input-div";
 
 const App = () => {
   return (
-    <EditableDiv
-      divLabel="example"
+    <InputDiv
+      inputKey="example"
       placeholder="Type something..."
       defaultValue="Hello, world!"
     />
@@ -54,19 +51,19 @@ export default App;
 
 ```tsx
 import React from "react";
-import { EditableDiv, EditableDivProvider } from "react-editable-div";
+import { InputDiv, InputDivProvider } from "react-input-div";
 
 const App = () => {
   const customParser = (text: string) => text.trim().toUpperCase();
 
   return (
-    <EditableDivProvider>
-      <EditableDiv
-        divLabel="advanced-example"
+    <InputDivProvider>
+      <InputDiv
+        inputKey="advanced-example"
         placeholder="Start typing..."
         parser={customParser}
       />
-    </EditableDivProvider>
+    </InputDivProvider>
   );
 };
 
@@ -78,7 +75,7 @@ export default App;
 
 | Prop             | Type                              | Default         | Description                                                                 |
 | ----------------- | --------------------------------- | --------------- | --------------------------------------------------------------------------- |
-| `divLabel`        | `string` or `string[]`           | **Required**    | A unique label or array of labels for the editable `div` element.           |
+| `inputKey`        | `string` or `string[]`           | **Required**    | A unique label or array of labels for the editable `div` element.           |
 | `children`        | `ReactNode`                      | `undefined`     | The content to display inside the editable `div`.                           |
 | `isEditing`       | `boolean`                        | `true`          | Whether the `div` is editable.                                              |
 | `placeholder`     | `string`                         | `""`            | Placeholder text displayed when the `div` is empty.                         |
@@ -93,13 +90,13 @@ The component includes a default CSS file (style.css) for basic styling. To cust
 
 ### Default CSS Class
 
-- `.editable-div`
+- `.input-div`
 
 ### Example
 
 ```css
 /* style.css */
-.editable-div {
+.input-div {
   border: 1px solid #ccc;
   padding: 8px;
   border-radius: 4px;
@@ -115,8 +112,8 @@ To set up the project locally for development:
 1. Clone the repository:
    
 ```bash
-git clone https://github.com/Sibelius1865/react-editable-div.git
-cd react-editable-div
+git clone https://github.com/Sibelius1865/react-input-div.git
+cd react-input-div
 ```
 
 2. Install dependencies:
