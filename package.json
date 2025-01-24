@@ -1,12 +1,12 @@
 {
   "name": "react-input-div",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A lightweight library for creating editable React div components with built-in functions to retrieve",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Sibelius1865/react-input-div.git"
   },
-  "licence": "MIT",
+  "license": "MIT",
   "author": "Harada Taiyo",
   "type": "module",
   "main": "dist/index.js",
@@ -14,7 +14,7 @@
   "files": [
     "dist/",
     "README.md",
-    "LICENSE"
+    "LICENCE"
   ],
   "scripts": {
     "build:css": "cp src/style.css dist/style.css",
