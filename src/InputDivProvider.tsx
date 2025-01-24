@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useContext, useState, useRef } from "react";
 import { getDivInfo } from "./getDivInfo";
 import { setNestedValue } from "./setNestedValue";
-import { validate } from './validate';
+import validate from './validation';
 
 
 type Parser = (key: string) => any;

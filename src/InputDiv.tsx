@@ -1,6 +1,6 @@
 import { ReactNode, HTMLProps, useEffect } from "react";
 import { useInputDivContext } from "./InputDivProvider";
-import { validate } from "./validate";
+import validate from "./validation";
 import './style.css';
 
 
