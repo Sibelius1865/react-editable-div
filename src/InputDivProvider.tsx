@@ -1,63 +1,57 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import { ReactNode, createContext, useContext, useState, useRef } from "react";
+import { getDivInfo } from "./getDivInfo";
+import { setNestedValue } from "./setNestedValue";
+import { validate } from './validate';
 
+
+type Parser = (key: string) => any;
 
 type InputDivContextType = {
-  register: (inputKey: string | string[], getText: () => string) => void,
-  getValues: () => Record<string, string>,
+  getValues: (label: string) => Record<string, any>,
+  registerParser: (label: string, inputKeyStr: string, parser: Parser) => void,
+  providerLabel: string,
+  providerIsEditing: boolean,
 };
 const InputDivContext = createContext<InputDivContextType | null>(null);
 
 type InputDivProviderProps = {
-  children?: ReactNode
+  children?: ReactNode,
+  label?: string,
+  isEditing?: boolean,
 }
-export const InputDivProvider = ({ children }: InputDivProviderProps) => {
-  const [getTextFuncs, setGetTextFuncs] = useState<Record<string, () => string>>({});
+export const InputDivProvider = ({ children, label: providerLabel = '', isEditing: providerIsEditing = false }: InputDivProviderProps) => {
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const register = (inputKey: string | string[], getText: () => string) => {
-    setGetTextFuncs((prev) => {
-      let updatedFuncs = { ...prev };
+  const [parserMap, setParserMap] = useState<Record<string, Record<string, Parser>>>({});
+  const registerParser = (label: string, inputKeyStr: string, parser: Parser) => {
+    setParserMap((prev) => ({ ...prev, [label]: { [inputKeyStr]: parser } }))
+  }
 
-      if (typeof inputKey === 'string') {
-        updatedFuncs[inputKey] = getText;
-      } else if (Array.isArray(inputKey)) {
-        inputKey.reduce((acc: Record<string, any>, currentInputKey: string, index: number) => {
-          if (index === inputKey.length - 1) {
-            acc[currentInputKey] = getText;
-          } else {
-            if (!acc[currentInputKey]) acc[currentInputKey] = {};
-          }
-          return acc[currentInputKey];
-        }, updatedFuncs);
-      }
-  
-      return updatedFuncs;
-    });
-  };
-
-
-  type Object = Record<string, any>;
-  const extractValues = (obj: Object): Object => {
-    return Object.entries(obj).reduce((values, [key, value]) => {
-      values[key] = typeof value === 'function' ? value() : extractValues(value);
-      return values;
-    }, {} as Object);
-  };
-
-  const getValues = () => {
-    return extractValues(getTextFuncs);
+  const getValues = (label: string = providerLabel) => {
+    const divInfo = validate.divInfo(getDivInfo(containerRef.current, label));
+    const values = divInfo.reduce((acc, item) => {
+      const { key, value } = item;
+      const parsedValue = parserMap[label]?.[key] 
+        ? parserMap[label][key](value) 
+        : value;
+      return setNestedValue(acc, key, parsedValue);
+    }, {})
+    return values;
   }
 
   return (
-    <InputDivContext.Provider value={{ register, getValues }}>
-      {children}
+    <InputDivContext.Provider value={{ getValues, registerParser, providerLabel, providerIsEditing }}>
+      <div ref={containerRef}>
+        {children}
+      </div>
     </InputDivContext.Provider>
   );
 };
 
-export const useInputDiv = () => {
+export const useInputDivContext = () => {
   const context = useContext(InputDivContext);
   if (!context) {
-    throw new Error("useInputDiv must be used within InputDivProvider");
+    throw new Error("registerInputDiv must be used within InputDivProvider");
   }
   return context;
 };
