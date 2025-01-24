@@ -47,15 +47,15 @@ const Component = () => {
     // {
     //   id: "123456789",
     //   name: {
-    //     first: "John",
-    //     last: "Doe",
+    //     first: "Unko",
+    //     last: "Buriburi",
     //   },
     //   address: {
-    //     street: "123 Main St",
-    //     city: "Springfield",
+    //     street: "123 Hanakuso St",
+    //     city: "Tokyo",
     //     country: {
-    //       name: "United States",
-    //       code: "US",
+    //       name: "Japan",
+    //       code: "JP",
     //     },
     //   },
     //   contact: {
@@ -63,7 +63,7 @@ const Component = () => {
     //       home: "123-456-7890",
     //       work: "987-654-3210",
     //     },
-    //     email: "john.doe@example.com",
+    //     email: "unko.buriburi@example.com",
     //   },
     // };
   }
