@@ -33,7 +33,6 @@ Here is an example of how to use the `InputDiv` component in your project:
 ### Basic Example
 
 ```tsx
-import React from "react";
 import { InputDivProvider, InputDiv, useInputDiv } from "react-input-div";
 
 const Component = () => {
@@ -47,7 +46,7 @@ const Component = () => {
     // {
     //   id: "123456789",
     //   name: {
-    //     first: "Unko",
+    //     first: "Unchi",
     //     last: "Buriburi",
     //   },
     //   address: {
@@ -63,7 +62,7 @@ const Component = () => {
     //       home: "123-456-7890",
     //       work: "987-654-3210",
     //     },
-    //     email: "unko.buriburi@example.com",
+    //     email: "unchi.buriburi@example.com",
     //   },
     // };
   }
@@ -77,7 +76,7 @@ const Component = () => {
       <section>
         <h2>Name</h2>
         <p>
-          <InputDiv label="user" inputKey={["name", "first"]}>Unko</InputDiv>
+          <InputDiv label="user" inputKey={["name", "first"]}>Unchi</InputDiv>
           <InputDiv label="user" inputKey={["name", "last"]}>Buriburi</InputDiv>
         </p>
       </section>
@@ -123,7 +122,7 @@ const Component = () => {
             </tr>
             <tr>
               <td>Email</td>
-              <td><InputDiv label="user" inputKey={["contact", "email"]}>unko.buriburi@example.com</InputDiv></td>
+              <td><InputDiv label="user" inputKey={["contact", "email"]}>unchi.buriburi@example.com</InputDiv></td>
             </tr>
           </tbody>
         </table>
