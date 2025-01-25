@@ -6,7 +6,6 @@ const hasOverlap = (path1: string[], path2: string[]): boolean => {
 }
 
 const isLabelConflict = (key1: string, key2: string) => {
-  console.log(key1, key2)
   if (key1 === key2) {
     throw new Error(`The label "${key1}" conflicts with itself. Duplicate labels are not allowed.`);
   }
@@ -20,7 +19,6 @@ type DivInfoStrict = { value: string, key: string }[];
 const inputKeyNotConflicted = (divInfo: DivInfoStrict) => {
   const keys = divInfo.map((item) => item.key);
   const _ = keys.reduce((acc, item) => {
-    console.log(acc, item)
     return acc.some((it) => isLabelConflict(it, item)) ? [] : [ ...acc, item ];
   }, [] as string[])
   return divInfo;
