@@ -1,5 +1,9 @@
-export const setNestedValue = (obj: Record<string, any>, path: string, value: any): Record<string, any> => {
-  const keys = path.split('.');
+export const setNestedValue = (
+  obj: Record<string, any>,
+  path: string,
+  value: any
+): Record<string, any> => {
+  const keys = path.split(".");
   let current = obj;
 
   keys.forEach((key, index) => {

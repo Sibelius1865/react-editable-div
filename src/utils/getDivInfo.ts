@@ -3,7 +3,10 @@ type DivInfo = {
   key: string | null;
 };
 
-export const getDivInfo = (container: HTMLElement | null, label: string): DivInfo[] => {
+export const getDivInfo = (
+  container: HTMLElement | null,
+  label: string
+): DivInfo[] => {
   if (!container) return [];
 
   const selector = `div[data-label="${label}"]`;
@@ -12,4 +15,4 @@ export const getDivInfo = (container: HTMLElement | null, label: string): DivInf
     value: div.textContent || "",
     key: div.dataset.inputKey || null,
   }));
-}
+};

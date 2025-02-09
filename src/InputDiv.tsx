@@ -1,5 +1,6 @@
 import { ReactNode, HTMLProps, useEffect } from "react";
 import { useInputDivContext } from "./InputDivProvider";
+import { handlePaste } from "./utils";
 import validate from "./validation";
 import "./style.css";
 
@@ -8,6 +9,7 @@ type InputDivProps = {
   label?: string;
   inputKey: string | string[];
   isEditing?: boolean;
+  isPreservingStyle?: boolean;
   placeholder?: string;
   defaultValue?: string;
   parser?: (text: string) => any;
@@ -18,6 +20,7 @@ export const InputDiv = ({
   label: propLabel,
   inputKey,
   isEditing = true,
+  isPreservingStyle = false,
   placeholder = "",
   defaultValue = "",
   parser,
@@ -37,6 +40,7 @@ export const InputDiv = ({
     contentEditable: providerIsEditing || isEditing,
     suppressContentEditableWarning: true,
     spellCheck: false,
+    onPaste: isPreservingStyle ? undefined : handlePaste,
     placeholder: placeholder,
     "data-label": label,
     "data-input-key": inputKeyStr,
