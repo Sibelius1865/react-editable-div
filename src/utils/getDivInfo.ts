@@ -1,8 +1,17 @@
+const getText = (div: HTMLDivElement) => {
+  if (!div) return "";
+
+  return div.innerHTML
+    .replace(/<div>/g, "\n")
+    .replace(/<\/div>/g, "")
+    .replace(/<br\s*\/?>/g, "\n")
+    .replace(/&nbsp;/g, " ");
+};
+
 type DivInfo = {
   value: string;
   key: string | null;
 };
-
 export const getDivInfo = (
   container: HTMLElement | null,
   label: string
@@ -12,7 +21,7 @@ export const getDivInfo = (
   const selector = `div[data-label="${label}"]`;
   const targetDivs = container.querySelectorAll<HTMLDivElement>(selector);
   return Array.from(targetDivs).map((div) => ({
-    value: div.innerText || "",
+    value: getText(div),
     key: div.dataset.inputKey || null,
   }));
 };
