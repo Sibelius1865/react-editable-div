@@ -12,7 +12,7 @@ export const getDivInfo = (
   const selector = `div[data-label="${label}"]`;
   const targetDivs = container.querySelectorAll<HTMLDivElement>(selector);
   return Array.from(targetDivs).map((div) => ({
-    value: div.textContent || "",
+    value: div.innerText || "",
     key: div.dataset.inputKey || null,
   }));
 };
