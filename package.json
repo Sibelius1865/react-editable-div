@@ -1,6 +1,6 @@
 {
   "name": "react-input-div",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "A lightweight library for creating editable React div components with built-in functions to retrieve",
   "repository": {
     "type": "git",
