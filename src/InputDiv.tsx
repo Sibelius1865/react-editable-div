@@ -10,8 +10,8 @@ type InputDivProps = {
   inputKey: string | string[];
   isEditing?: boolean;
   isPreservingStyle?: boolean;
-  placeholder?: string;
-  defaultValue?: string;
+  placeholder?: string | number;
+  defaultValue?: string | number;
   parser?: (text: string) => any;
 } & HTMLProps<HTMLDivElement>;
 
@@ -41,7 +41,7 @@ export const InputDiv = ({
     suppressContentEditableWarning: true,
     spellCheck: false,
     onPaste: isPreservingStyle ? undefined : handlePaste,
-    placeholder: placeholder,
+    placeholder: String(placeholder),
     "data-label": label,
     "data-input-key": inputKeyStr,
   };
