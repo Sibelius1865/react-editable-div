@@ -1,17 +1,18 @@
-const getText = (div: HTMLDivElement) => {
+import { DivInfo } from "@/types";
+
+const getText = (div: HTMLDivElement): string => {
   if (!div) return "";
 
-  return div.innerHTML
+  const valueElement = div.querySelector("span[data-value]");
+  const target = valueElement || div;
+
+  return target.innerHTML
     .replace(/<div>/g, "\n")
     .replace(/<\/div>/g, "")
     .replace(/<br\s*\/?>/g, "\n")
     .replace(/&nbsp;/g, " ");
 };
 
-type DivInfo = {
-  value: string;
-  key: string | null;
-};
 export const getDivInfo = (
   container: HTMLElement | null,
   label: string

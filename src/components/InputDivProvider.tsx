@@ -1,16 +1,8 @@
-import { ReactNode, createContext, useContext, useState, useRef } from "react";
-import { getDivInfo, setNestedValue } from "./utils";
-import validate from "./validation";
-
-type Parser = (key: string) => any;
-
-type InputDivContextType = {
-  getValues: (label: string) => Record<string, any>;
-  registerParser: (label: string, inputKeyStr: string, parser: Parser) => void;
-  providerLabel: string;
-  providerIsEditing: boolean;
-};
-const InputDivContext = createContext<InputDivContextType | null>(null);
+import { ReactNode, useState, useRef } from "react";
+import { InputDivContext } from "@/contexts/InputDivContext";
+import { getDivInfo, setNestedValue } from "@/utils";
+import validate from "@/validation";
+import { Parser } from "@/types";
 
 type InputDivProviderProps = {
   children?: ReactNode;
@@ -54,12 +46,4 @@ export const InputDivProvider = ({
       <div ref={containerRef}>{children}</div>
     </InputDivContext.Provider>
   );
-};
-
-export const useInputDivContext = () => {
-  const context = useContext(InputDivContext);
-  if (!context) {
-    throw new Error("registerInputDiv must be used within InputDivProvider");
-  }
-  return context;
 };

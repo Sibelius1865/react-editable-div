@@ -1,8 +1,8 @@
 import { ReactNode, HTMLProps, useEffect } from "react";
-import { useInputDivContext } from "./InputDivProvider";
-import { handlePaste } from "./utils";
-import validate from "./validation";
-import "./style.css";
+import { useInputDivContext } from "@/contexts/InputDivContext";
+import { handlePaste } from "@/utils";
+import validate from "@/validation";
+import "@/style.css";
 
 type InputDivProps = {
   children?: ReactNode;
@@ -16,7 +16,7 @@ type InputDivProps = {
 } & HTMLProps<HTMLDivElement>;
 
 export const InputDiv = ({
-  children,
+  children = null,
   label: propLabel,
   inputKey,
   isEditing = true,
