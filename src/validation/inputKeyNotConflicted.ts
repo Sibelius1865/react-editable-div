@@ -1,4 +1,4 @@
-import { DivInfoStrict } from "@/types";
+import { DivInfoStrict } from "../types";
 
 const isPathContained = (treePath: string[], targetPath: string[]): boolean => {
   return targetPath.every((val, index) => val === treePath[index]);

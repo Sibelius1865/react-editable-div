@@ -1,8 +1,8 @@
 import { ReactNode, useState, useRef } from "react";
-import { InputDivContext } from "@/contexts/InputDivContext";
-import { getDivInfo, setNestedValue } from "@/utils";
-import validate from "@/validation";
-import { Parser } from "@/types";
+import { InputDivContext } from "../contexts/InputDivContext";
+import { getDivInfo, setNestedValue } from "../utils";
+import validate from "../validation";
+import { Parser } from "../types";
 
 type InputDivProviderProps = {
   children?: ReactNode;

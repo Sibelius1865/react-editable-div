@@ -1,4 +1,4 @@
-import { DivInfo } from "@/types";
+import { DivInfo } from "../types";
 
 const getText = (div: HTMLDivElement): string => {
   if (!div) return "";

@@ -1,4 +1,4 @@
-import { DivInfo, DivInfoStrict } from "@/types";
+import { DivInfo, DivInfoStrict } from "../types";
 
 const inputKeyNotNullabe = (divInfo: DivInfo[]): DivInfoStrict[] => {
   return divInfo.map((item) => {
