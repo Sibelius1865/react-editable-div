@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { InputsContext, defaultContext } from "../contexts/InputsContext";
+import { InputsContext, initialContext } from "../contexts/InputsContext";
 
 export const useInputsContext = () => {
   const context = useContext(InputsContext);
   if (!context) {
-    return defaultContext;
+    return { ...initialContext, hasContext: false };
   }
-  return context;
+  return { ...context, hasContext: true };
 };

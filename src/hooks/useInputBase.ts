@@ -18,13 +18,24 @@ export const useInputBase = <T extends HTMLElement>({
   const inputKeyStr = Array.isArray(inputKey) ? inputKey.join(".") : inputKey;
 
   const {
+    hasContext,
     registerParser,
     sharedLabel,
     sharedIsEditing = true,
   } = useInputsContext();
   const label = validate.label(sharedLabel, propLabel);
 
-  useEffect(() => parser && registerParser?.(label, inputKeyStr, parser), []);
+  useEffect(() => {
+    if (!parser) return;
+
+    if (hasContext) {
+      registerParser?.(label, inputKeyStr, parser);
+    } else {
+      console.error(
+        "If you want to register a 'parser', please include it inside the 'InputsScope' component."
+      );
+    }
+  }, []);
 
   const editProps = {
     ...props,

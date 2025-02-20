@@ -8,7 +8,7 @@ type InputsContextType = {
   sharedIsEditing: boolean;
 };
 
-export const defaultContext: InputsContextType = {
+export const initialContext: InputsContextType = {
   getValues: () => ({}),
   registerParser: () => {},
   sharedLabel: "",

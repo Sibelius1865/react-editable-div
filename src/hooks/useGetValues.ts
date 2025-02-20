@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { getDivInfo, setNestedValue } from "../utils";
-import validate from "../validation";
 import { GetValues } from "../types";
+import validate from "../validation";
 
 type Params = {
   containerRef: React.RefObject<HTMLDivElement | null>;

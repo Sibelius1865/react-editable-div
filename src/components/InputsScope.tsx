@@ -7,7 +7,7 @@ type InputsScopeProps = {
   children?: ReactNode;
   label?: string;
   isEditing?: boolean;
-  setGetValues: (getValues: GetValues) => void;
+  setGetValues?: (getValues: GetValues) => void;
 };
 export const InputsScope = ({
   children,
