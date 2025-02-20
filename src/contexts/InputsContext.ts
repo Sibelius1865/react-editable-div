@@ -4,15 +4,21 @@ import { Parser } from "../types";
 type InputsContextType = {
   getValues: (label?: string) => Record<string, any>;
   registerParser: (label: string, inputKeyStr: string, parser: Parser) => void;
-  sharedLabel: string;
-  sharedIsEditing: boolean;
+  sharedProps: {
+    sharedLabel: string;
+    sharedIsEditing: boolean;
+    sharedIsPreservingStyle: boolean;
+  };
 };
 
 export const initialContext: InputsContextType = {
   getValues: () => ({}),
   registerParser: () => {},
-  sharedLabel: "",
-  sharedIsEditing: true,
+  sharedProps: {
+    sharedLabel: "",
+    sharedIsEditing: true,
+    sharedIsPreservingStyle: false,
+  },
 };
 
 export const InputsContext = createContext<InputsContextType | null>(null);

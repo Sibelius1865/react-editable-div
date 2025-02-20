@@ -5,15 +5,17 @@ import { GetValues } from "../types";
 
 type InputsScopeProps = {
   children?: ReactNode;
+  setGetValues?: (getValues: GetValues) => void;
   label?: string;
   isEditing?: boolean;
-  setGetValues?: (getValues: GetValues) => void;
+  isPreservingStyle?: boolean;
 };
 export const InputsScope = ({
   children,
-  label: sharedLabel = "",
-  isEditing: sharedIsEditing = false,
   setGetValues,
+  label = "",
+  isEditing = false,
+  isPreservingStyle = false,
 }: InputsScopeProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -22,15 +24,25 @@ export const InputsScope = ({
   const { getValues } = useGetValues({
     containerRef,
     parserMap,
-    sharedLabel,
+    sharedLabel: label,
   });
   useEffect(() => {
     setGetValues && setGetValues(() => getValues);
   }, [getValues]);
 
+  const sharedProps = {
+    sharedLabel: label,
+    sharedIsEditing: isEditing,
+    sharedIsPreservingStyle: isPreservingStyle,
+  };
+
   return (
     <InputsContext.Provider
-      value={{ getValues, registerParser, sharedLabel, sharedIsEditing }}
+      value={{
+        getValues,
+        registerParser,
+        sharedProps,
+      }}
     >
       <div ref={containerRef}>{children}</div>
     </InputsContext.Provider>

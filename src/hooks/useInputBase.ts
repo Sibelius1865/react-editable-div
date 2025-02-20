@@ -20,8 +20,7 @@ export const useInputBase = <T extends HTMLElement>({
   const {
     hasContext,
     registerParser,
-    sharedLabel,
-    sharedIsEditing = true,
+    sharedProps: { sharedLabel, sharedIsEditing, sharedIsPreservingStyle },
   } = useInputsContext();
   const label = validate.label(sharedLabel, propLabel);
 
@@ -40,10 +39,11 @@ export const useInputBase = <T extends HTMLElement>({
   const editProps = {
     ...props,
     className: `input-element ${props.className || ""}`,
-    contentEditable: sharedIsEditing || isEditing,
+    contentEditable: isEditing || sharedIsEditing,
     suppressContentEditableWarning: true,
     spellCheck: false,
-    onPaste: isPreservingStyle ? undefined : handlePaste,
+    onPaste:
+      isPreservingStyle && sharedIsPreservingStyle ? undefined : handlePaste,
     placeholder: String(placeholder),
     "data-label": label,
     "data-input-key": inputKeyStr,
