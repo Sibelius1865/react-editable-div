@@ -1,14 +1,14 @@
 # React Input Div
 
-A lightweight and customisable React component for creating editable `div` elements, with support for placeholder text, default values, parsing functions, and the ability to manage multiple editable `div` elements simultaneously.
+A lightweight and customisable React component for creating editable `div` and `span` elements, with support for placeholder text, default values, parsing functions, and the ability to manage multiple editable elements simultaneously.
 
 ## Features
 
-- Easily create content-editable `div` elements in React.
+- Easily create content-editable `div` and `span` elements in React.
 - Fully customizable via props.
 - Supports placeholder text and default values.
 - Integration with custom parsers for text processing.
-- Retrieve content from multiple editable `div` elements at once.
+- Retrieve content from multiple editableelements at once.
 - Lightweight with minimal dependencies.
 
 ## Installation
@@ -25,16 +25,17 @@ yarn add react-input-div
 
 ## Usage
 
-Here is an example of how to use the `InputDiv` component in your project:
+Here is an example of how to use the `InputDiv` and `InputSpan` component in your project:
 
 ### Basic Example
 
 ```tsx
-import { InputDivProvider, InputDiv, useInputDiv } from "react-input-div";
+import { InputsScope, InputDiv, InputSpan, useInputs } from "react-input-div";
 
-const Component = () => {
-  // useInputDiv can only be used within components that are wrapped by InputDivProvider.
-  const getValues = useInputDiv();
+const Content = () => {
+  const Component = () => {
+  // When `useInputs` is inside a component wrapped by `InputsScope`
+  const { getValues } = useInputs();
 
   const handleClick = () => {
     const values = getValues("user");
@@ -74,43 +75,41 @@ const Component = () => {
       </header>
       <section>
         <h2>Name</h2>
-        <p>
-          <InputDiv label="user" inputKey={["name", "first"]}>
-            Unchi
-          </InputDiv>
-          <InputDiv label="user" inputKey={["name", "last"]}>
-            Buriburi
-          </InputDiv>
-        </p>
+        <InputDiv label="user" inputKey={["name", "first"]}>
+          Unchi
+        </InputDiv>
+        <InputDiv label="user" inputKey={["name", "last"]}>
+          Buriburi
+        </InputDiv>
       </section>
       <section>
         <h2>Address</h2>
         <div>
           <span>Street:</span>
-          <InputDiv label="user" inputKey={["address", "street"]}>
+          <InputSpan label="user" inputKey={["address", "street"]}>
             123 Hanakuso St
-          </InputDiv>
+          </InputSpan>
         </div>
         <div>
           <span>City:</span>
-          <InputDiv label="user" inputKey={["address", "city"]}>
+          <InputSpan label="user" inputKey={["address", "city"]}>
             Tokyo
-          </InputDiv>
+          </InputSpan>
         </div>
         <div>
           <span>Country:</span>
           <ul>
             <li>
-              Name:{" "}
-              <InputDiv label="user" inputKey={["address", "country", "name"]}>
+              Name:
+              <InputSpan label="user" isEditing={false} inputKey={["address", "country", "name"]}>
                 Japan
-              </InputDiv>
+              </InputSpan>
             </li>
             <li>
-              Code:{" "}
-              <InputDiv label="user" inputKey={["address", "country", "code"]}>
+              Code:
+              <InputSpan label="user" isEditing={false} inputKey={["address", "country", "code"]}>
                 JP
-              </InputDiv>
+              </InputSpan>
             </li>
           </ul>
         </div>
@@ -159,28 +158,36 @@ const Component = () => {
 
 const App = () => {
   return (
-    <InputDivProvider>
-      <Component />
-    </InputDivProvider>
+    <InputsScope>
+      <Content />
+    </InputsScope>
+  );
+};
+
+// or
+
+const App = () => {
+  return (
+    // You can use it without wrapping it with `InputsScope` as well.
+    <Content />
   );
 };
 
 export default App;
 ```
 
-When the `InputDivProvider` is given a label attribute, any `InputDiv` components contained within it can omit their own label attribute. In such cases, the `InputDivProvider`’s label value will be automatically applied to all nested `InputDiv` components.
+When using the `useInputs` hook in conjunction with `InputsScope`, it is essential to pass the `register` function from `useInputs` into the `InputsScope` component. This ensures that the input values are correctly registered and managed by the `InputsScope` for all nested components.
 
 ```tsx
 const App = () => {
-  return (
-    <InputDivProvider label="user">
-      <Component />
-    </InputDivProvider>
-  );
+  // When useInputs is NOT inside a component wrapped by `InputsScope`
+  const { getValues, register } = useInputs();
+
+  return <InputsScope {...register}>{/* Content */}</InputsScope>;
 };
 ```
 
-### Advanced Example of InputDiv
+### Property Usage
 
 ```tsx
 const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -190,41 +197,67 @@ const customParser = (input: string): string[] => {
 };
 
 // You can also use standard HTML attributes for a div.
+// The same applies to InputSpan.
 <InputDiv
   className="keywords bg-white rounded-lg p-6"
   inputKey="keywords"
   isEditing={isEditing}
+  isPreservingStyle={false}
   placeholder="Please enter the keywords"
   parser={customParser}
-  defaultValue={defaultValue} {/* Default value can be set here or inside InputDiv */}
+  defaultValue={defaultValue} {/* Default value can be set here or inside the component */}
 >
-  {defaultValue} {/* Default value can be set here or inside InputDiv */}
+  {defaultValue} {/* Default value can be set here or inside the component */}
 </InputDiv>
+```
+
+By using `InputsScope`, there is no need to individually set `label`, `isEditing`, or `isPreservingStyle` for each `InputDiv`/`InputSpan`. These props, when specified in `InputsScope`, will be automatically passed down to all nested `InputDiv`/`InputSpan` components.
+
+```tsx
+const App = () => {
+  return (
+    <InputsScope label="user" isEditing={isEditing} isPreservingStyle={false}>
+      <div className="user-profile">
+        <header>
+          <h1>User Information</h1>
+          <InputDiv inputKey="id">123456789</InputDiv>
+        </header>
+        <section>
+          <h2>Name</h2>
+          <InputDiv inputKey={["name", "first"]}>Unchi</InputDiv>
+          <InputDiv inputKey={["name", "last"]}>Buriburi</InputDiv>
+        </section>
+      </div>
+      {/* ... */}
+    </InputsScope>
+  );
+};
 ```
 
 ## Props
 
-> **Note:** The `label` must be set either in the `InputDivProvider` or in the `InputDiv`. It is required in one of these two components.
+> **Note:** The `label` must be set either in the `InputsScope` or in the `InputDiv`/`InputSpan`. It is required in one of these two components.
 
-### `InputDivProvider`
+### `InputsScope`
 
-| Prop        | Type      | Default | Description                                                                                      |
-| ----------- | --------- | ------- | ------------------------------------------------------------------------------------------------ |
-| `label`     | `string`  | **N/A** | If no `label` is provided here, the `label` values from each `InputDiv` will be applied.         |
-| `isEditing` | `boolean` | `false` | Set the `isEditing` state for all `InputDiv` components contained within the `InputDivProvider`. |
+| Prop        | Type      | Default | Description                                                                                 |
+| ----------- | --------- | ------- | ------------------------------------------------------------------------------------------- |
+| `label`     | `string`  | **N/A** | If no `label` is provided here, the `label` values from each `InputDiv` will be applied.    |
+| `isEditing` | `boolean` | `false` | Set the `isEditing` state for all `InputDiv` components contained within the `InputsScope`. |
 
-### `InputDiv`
+### `InputDiv`/`InputSpan`
 
-| Prop           | Type                        | Default      | Description                                                                  |
-| -------------- | --------------------------- | ------------ | ---------------------------------------------------------------------------- |
-| `label`        | `string`                    | **N/A**      | If a `label` is provided by the `InputDivProvider`, it will be applied here. |
-| `inputKey`     | `string` or `string[]`      | **Required** | A unique label or array of keys for the editable `div` element.              |
-| `children`     | `ReactNode`                 | `undefined`  | The content to display inside the editable `div`.                            |
-| `isEditing`    | `boolean`                   | `true`       | Whether the `div` is editable.                                               |
-| `placeholder`  | `string` or `number`        | `""`         | Placeholder text displayed when the `div` is empty.                          |
-| `defaultValue` | `string` or `number`        | `""`         | Default text content inside the editable `div`.                              |
-| `parser`       | `(text: string) => any`     | `undefined`  | A custom function for parsing the text content before submitting or saving.  |
-| `...props`     | `HTMLProps<HTMLDivElement>` | `undefined`  | Additional props for the underlying `div` element.                           |
+| Prop                | Type                        | Default      | Description                                                                 |
+| ------------------- | --------------------------- | ------------ | --------------------------------------------------------------------------- |
+| `label`             | `string`                    | **N/A**      | If a `label` is provided by the `InputsScope`, it will be applied here.     |
+| `inputKey`          | `string` or `string[]`      | **Required** | A unique label or array of keys for the editable `div`/`span` element.      |
+| `children`          | `ReactNode`                 | `undefined`  | The content to display inside the editable `div`/`span`.                    |
+| `isEditing`         | `boolean`                   | `true`       | Whether the `div`/`span` is editable.                                       |
+| `isPreservingStyle` | `boolean`                   | `false`      | Whether the `div`/`span` preserves its styling.                             |
+| `placeholder`       | `string` or `number`        | `""`         | Placeholder text displayed when the `div`/`span` is empty.                  |
+| `defaultValue`      | `string` or `number`        | `""`         | Default text content inside the editable `div`/`span`.                      |
+| `parser`            | `(text: string) => any`     | `undefined`  | A custom function for parsing the text content before submitting or saving. |
+| `...props`          | `HTMLProps<HTMLDivElement>` | `undefined`  | Additional props for the underlying `div`/`span` element.                   |
 
 ## Styling
 
@@ -232,17 +265,22 @@ The component includes a default CSS file (style.css) for basic styling. To cust
 
 ### Default CSS Class
 
-- `.input-div`
+- `.input-element`
 
 ### Example
 
 ```css
 /* style.css */
-.input-div {
+.input-element {
   border: 1px solid #ccc;
   padding: 8px;
   border-radius: 4px;
   min-height: 40px;
+}
+
+.input-element:empty:before {
+  content: attr(placeholder);
+  color: #aaaaaa;
 }
 ```
 

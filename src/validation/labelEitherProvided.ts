@@ -1,11 +1,13 @@
-const labelEitherProvided = (providerLabel?: string, label?: string): string => {
-  if (providerLabel) {
-    return providerLabel;
-  }
+const labelEitherProvided = (sharedLabel?: string, label?: string): string => {
   if (label) {
     return label;
   }
-  throw new Error('Either "label" of "InputDivProvider" or "InputDiv" is required but was not provided.');
-}
+  if (sharedLabel) {
+    return sharedLabel;
+  }
+  throw new Error(
+    'Either "label" of "InputsScope" or "InputDiv/InputSpan" is required but was not provided.'
+  );
+};
 
 export default labelEitherProvided;
