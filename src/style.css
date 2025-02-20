@@ -1,9 +1,0 @@
-.input-div {
-  outline: 0px solid transparent;
-  cursor: text;
-}
-
-.input-div:empty:before {
-  content: attr(placeholder);
-  color: #AAAAAA;
-}
