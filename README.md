@@ -33,7 +33,6 @@ Here is an example of how to use the `InputDiv` and `InputSpan` component in you
 import { InputsScope, InputDiv, InputSpan, useInputs } from "react-input-div";
 
 const Content = () => {
-  const Component = () => {
   // When `useInputs` is inside a component wrapped by `InputsScope`
   const { getValues } = useInputs();
 
@@ -101,13 +100,21 @@ const Content = () => {
           <ul>
             <li>
               Name:
-              <InputSpan label="user" isEditing={false} inputKey={["address", "country", "name"]}>
+              <InputSpan
+                label="user"
+                isEditing={false}
+                inputKey={["address", "country", "name"]}
+              >
                 Japan
               </InputSpan>
             </li>
             <li>
               Code:
-              <InputSpan label="user" isEditing={false} inputKey={["address", "country", "code"]}>
+              <InputSpan
+                label="user"
+                isEditing={false}
+                inputKey={["address", "country", "code"]}
+              >
                 JP
               </InputSpan>
             </li>
