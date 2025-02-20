@@ -1,5 +1,4 @@
 export { InputDiv, InputSpan } from "./components/Inputs";
-export { InputDivProvider } from "./components/InputDivProvider";
+export { InputsScope } from "./components/InputsScope";
 
-import { useInputDivContext } from "./contexts/InputDivContext";
-export const useInputDiv = () => useInputDivContext().getValues;
+export { useInputs } from "./hooks/useInputs";

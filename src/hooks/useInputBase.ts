@@ -1,18 +1,8 @@
-import { ReactNode, HTMLProps, useEffect } from "react";
-import { useInputDivContext } from "../contexts/InputDivContext";
+import { useEffect } from "react";
+import { useInputsContext } from "./useInputsContext";
 import { handlePaste } from "../utils";
+import { InputProps } from "../types";
 import validate from "../validation";
-
-export type InputProps<T> = {
-  children?: ReactNode;
-  label?: string;
-  inputKey: string | string[];
-  isEditing?: boolean;
-  isPreservingStyle?: boolean;
-  placeholder?: string | number;
-  defaultValue?: string | number;
-  parser?: (text: string) => any;
-} & HTMLProps<T>;
 
 export const useInputBase = <T extends HTMLElement>({
   children = null,
@@ -27,16 +17,19 @@ export const useInputBase = <T extends HTMLElement>({
 }: InputProps<T>) => {
   const inputKeyStr = Array.isArray(inputKey) ? inputKey.join(".") : inputKey;
 
-  const { registerParser, providerLabel, providerIsEditing } =
-    useInputDivContext();
-  const label = validate.label(providerLabel, propLabel);
+  const {
+    registerParser,
+    sharedLabel,
+    sharedIsEditing = true,
+  } = useInputsContext();
+  const label = validate.label(sharedLabel, propLabel);
 
-  useEffect(() => parser && registerParser(label, inputKeyStr, parser), []);
+  useEffect(() => parser && registerParser?.(label, inputKeyStr, parser), []);
 
   const editProps = {
     ...props,
     className: `input-element ${props.className || ""}`,
-    contentEditable: providerIsEditing || isEditing,
+    contentEditable: sharedIsEditing || isEditing,
     suppressContentEditableWarning: true,
     spellCheck: false,
     onPaste: isPreservingStyle ? undefined : handlePaste,

@@ -1,12 +1,9 @@
 import { DivInfo } from "../types";
 
-const getText = (div: HTMLDivElement): string => {
-  if (!div) return "";
+const getText = (element: HTMLElement): string => {
+  if (!element) return "";
 
-  const valueElement = div.querySelector("span[data-value]");
-  const target = valueElement || div;
-
-  return target.innerHTML
+  return element.innerHTML
     .replace(/<div>/g, "\n")
     .replace(/<\/div>/g, "")
     .replace(/<br\s*\/?>/g, "\n")
@@ -14,15 +11,15 @@ const getText = (div: HTMLDivElement): string => {
 };
 
 export const getDivInfo = (
-  container: HTMLElement | null,
+  container: HTMLElement | Document,
   label: string
 ): DivInfo[] => {
   if (!container) return [];
 
-  const selector = `div[data-label="${label}"]`;
-  const targetDivs = container.querySelectorAll<HTMLDivElement>(selector);
-  return Array.from(targetDivs).map((div) => ({
-    value: getText(div),
-    key: div.dataset.inputKey || null,
+  const selector = `[data-label="${label}"]`;
+  const targetDivs = container.querySelectorAll<HTMLElement>(selector);
+  return Array.from(targetDivs).map((element) => ({
+    value: getText(element),
+    key: element.dataset.inputKey || null,
   }));
 };

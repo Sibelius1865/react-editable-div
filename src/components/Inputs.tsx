@@ -1,4 +1,5 @@
-import { useInputBase, InputProps } from "./inputBase";
+import { useInputBase } from "../hooks";
+import { InputProps } from "../types";
 import "../style.css";
 
 export const InputDiv = (props: InputProps<HTMLDivElement>) => {
