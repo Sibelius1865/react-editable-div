@@ -2,9 +2,8 @@ import { ReactNode, HTMLProps, useEffect } from "react";
 import { useInputDivContext } from "../contexts/InputDivContext";
 import { handlePaste } from "../utils";
 import validate from "../validation";
-import "../style.css";
 
-type InputDivProps = {
+export type InputProps<T> = {
   children?: ReactNode;
   label?: string;
   inputKey: string | string[];
@@ -13,9 +12,9 @@ type InputDivProps = {
   placeholder?: string | number;
   defaultValue?: string | number;
   parser?: (text: string) => any;
-} & HTMLProps<HTMLDivElement>;
+} & HTMLProps<T>;
 
-export const InputDiv = ({
+export const useInputBase = <T extends HTMLElement>({
   children = null,
   label: propLabel,
   inputKey,
@@ -25,7 +24,7 @@ export const InputDiv = ({
   defaultValue = "",
   parser,
   ...props
-}: InputDivProps) => {
+}: InputProps<T>) => {
   const inputKeyStr = Array.isArray(inputKey) ? inputKey.join(".") : inputKey;
 
   const { registerParser, providerLabel, providerIsEditing } =
@@ -36,7 +35,7 @@ export const InputDiv = ({
 
   const editProps = {
     ...props,
-    className: `input-div ${props.className}`,
+    className: `input-element ${props.className || ""}`,
     contentEditable: providerIsEditing || isEditing,
     suppressContentEditableWarning: true,
     spellCheck: false,
@@ -46,5 +45,5 @@ export const InputDiv = ({
     "data-input-key": inputKeyStr,
   };
 
-  return <div {...editProps}>{defaultValue || children}</div>;
+  return { editProps, defaultValue, children };
 };
