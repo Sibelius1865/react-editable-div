@@ -1,6 +1,7 @@
 .input-element {
   outline: 0px solid transparent;
   cursor: text;
+  white-space: pre-line;
 }
 
 .input-element:empty:before {
